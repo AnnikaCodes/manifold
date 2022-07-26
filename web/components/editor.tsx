@@ -181,13 +181,17 @@ export function TextEditor(props: {
                 <span className="sr-only">Embed an iframe</span>
               </button>
             </div>
+            {upload.isLoading && (
+              <span className="text-xs">Uploading image...</span>
+            )}
+            {upload.isError && (
+              <span className="text-error text-xs">
+                Error uploading image :(
+              </span>
+            )}
           </div>
         </div>
       </div>
-      {upload.isLoading && <span className="text-xs">Uploading image...</span>}
-      {upload.isError && (
-        <span className="text-error text-xs">Error uploading image :(</span>
-      )}
     </>
   )
 }
