@@ -30,7 +30,6 @@ import { SiteLink } from 'web/components/site-link'
 import { groupPath } from 'web/lib/firebase/groups'
 import { insertContent } from '../editor/utils'
 import { contractMetrics } from 'common/contract-details'
-import { User } from 'common/user'
 import { UserLink } from 'web/components/user-link'
 import { FeaturedContractBadge } from 'web/components/contract/featured-contract-badge'
 import { Tooltip } from 'web/components/tooltip'
@@ -138,11 +137,9 @@ export function AbbrContractDetails(props: {
 
 export function ContractDetails(props: {
   contract: Contract
-  user: User | null | undefined
-  isCreator?: boolean
   disabled?: boolean
 }) {
-  const { contract, isCreator, disabled } = props
+  const { contract, disabled } = props
   const {
     closeTime,
     creatorName,
@@ -157,6 +154,7 @@ export function ContractDetails(props: {
   const groupToDisplay =
     groupLinks?.sort((a, b) => a.createdTime - b.createdTime)[0] ?? null
   const user = useUser()
+  const isCreator = user?.id === creatorId
   const [open, setOpen] = useState(false)
   const { width } = useWindowSize()
   const isMobile = (width ?? 0) < 600
@@ -287,12 +285,12 @@ export function ContractDetails(props: {
 
 export function ExtraMobileContractDetails(props: {
   contract: Contract
-  user: User | null | undefined
   forceShowVolume?: boolean
 }) {
-  const { contract, user, forceShowVolume } = props
+  const { contract, forceShowVolume } = props
   const { volume, resolutionTime, closeTime, creatorId, uniqueBettorCount } =
     contract
+  const user = useUser()
   const uniqueBettors = uniqueBettorCount ?? 0
   const { resolvedDate } = contractMetrics(contract)
   const volumeTranslation =

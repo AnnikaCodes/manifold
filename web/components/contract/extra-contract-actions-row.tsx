@@ -5,19 +5,16 @@ import { Row } from '../layout/row'
 import { Contract } from 'web/lib/firebase/contracts'
 import React, { useState } from 'react'
 import { Button } from 'web/components/button'
-import { User } from 'common/user'
+import { useUser } from 'web/hooks/use-user'
 import { ShareModal } from './share-modal'
 import { FollowMarketButton } from 'web/components/follow-market-button'
 import { LikeMarketButton } from 'web/components/contract/like-market-button'
 import { ContractInfoDialog } from 'web/components/contract/contract-info-dialog'
 import { Col } from 'web/components/layout/col'
 
-export function ExtraContractActionsRow(props: {
-  contract: Contract
-  user: User | undefined | null
-}) {
-  const { user, contract } = props
-
+export function ExtraContractActionsRow(props: { contract: Contract }) {
+  const { contract } = props
+  const user = useUser()
   const [isShareOpen, setShareOpen] = useState(false)
 
   return (
